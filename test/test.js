@@ -74,7 +74,7 @@ it('should delete a post', function () {
 it('should upate a blog post on PUT', function(){
     return chai.request(app)
    
-    .get('/blog-posts')
+    .get('/blog-post')
     .then(function( res) {
       const updatedPost = Object.assign(res.body[0], {
         title: 'A another test title',
@@ -83,7 +83,7 @@ it('should upate a blog post on PUT', function(){
         publishDate: ""
       });
       return chai.request(app)
-        .put(`/blog-posts/${res.body[0].id}`)
+        .put(`/blog-post/${res.body[0].id}`)
         .send(updatedPost)
         .then(function(res) {
           expect(res).to.have.status(204);
