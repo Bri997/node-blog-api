@@ -54,3 +54,39 @@ it('should fail when POST missing title, content, or author', function () {
         expect(res).to.have.status(400);
     })
 })
+
+
+
+it('should delete a post', function () {
+        return chai.request(app)
+        .get('/blog-post')
+        .then(function(res){
+            return chai.request(app)
+            .delete(`/blog-post/${res.body[0].id}`)
+        })
+        .then(function(res){
+            expect(res).to.have.status(204)
+        })
+
+})
+
+
+it('should upate a blog post on PUT', function(){
+    return chai.request(app)
+   
+    .get('/blog-posts')
+    .then(function( res) {
+      const updatedPost = Object.assign(res.body[0], {
+        title: 'A another test title',
+        content: 'some content',
+        author: 'Blah',
+        publishDate: ""
+      });
+      return chai.request(app)
+        .put(`/blog-posts/${res.body[0].id}`)
+        .send(updatedPost)
+        .then(function(res) {
+          expect(res).to.have.status(204);
+        });
+    });
+});
